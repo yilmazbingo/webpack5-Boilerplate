@@ -3,6 +3,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -19,17 +20,20 @@ module.exports = {
       // add as many aliases as you like!
       components: path.resolve(__dirname, "src/components"),
     },
-    fallback: {
-      // path: require.resolve("path-browserify"),
-      fs: false,
-      assert: require.resolve("assert/"),
-      os: require.resolve("os-browserify/browser"),
-      constants: require.resolve("constants-browserify"),
-      stream: require.resolve("stream-browserify"),
-      crypto: require.resolve("crypto-browserify"),
-      http: require.resolve("stream-http"),
-      https: require.resolve("https-browserify"),
-    },
+
+    //****************** INSTEAD OF MANUALLY INSTALLING YOU CAN USE NodePolyfillPlugin  */
+
+    // fallback: {
+    //   // path: require.resolve("path-browserify"),
+    //   fs: false,
+    //   assert: require.resolve("assert/"),
+    //   os: require.resolve("os-browserify/browser"),
+    //   constants: require.resolve("constants-browserify"),
+    //   stream: require.resolve("stream-browserify"),
+    //   crypto: require.resolve("crypto-browserify"),
+    //   http: require.resolve("stream-http"),
+    //   https: require.resolve("https-browserify"),
+    // },
   },
   // devtool: "eval-cheap-source-map",
   devtool: "eval",
@@ -87,13 +91,16 @@ module.exports = {
       title: "esBUild",
       template: "src/index.html",
     }),
+    new NodePolyfillPlugin(),
     // new CopyWebpackPlugin({
     //   patterns: [{ from: "assets", to: "assets" }],
     // }),
-    new webpack.ProvidePlugin({
-      process: "process/browser",
-      Buffer: ["buffer", "Buffer"],
-      React: "react",
-    }),
+
+    // *****************IF YOU ARE NOT USING  NodePolyfillPlugin YOU HAVE TO ADD THIS ****************
+    // new webpack.ProvidePlugin({
+    //   process: "process/browser",
+    //   Buffer: ["buffer", "Buffer"],
+    //   React: "react",
+    // }),
   ],
 };

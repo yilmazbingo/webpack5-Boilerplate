@@ -58,6 +58,7 @@
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
     "json5-loader": "^4.0.1",
+    "node-polyfill-webpack-plugin": "^1.1.4",
     "react-bootstrap": "^1.6.1",
     "react-tsparticles": "^1.34.0"
   }
